@@ -44,10 +44,14 @@ function add_menzi(cards, level, huxi)
                 print("index",i)
             end
             local add_huxi = 0
-            if i == 1 or i==37 then
-                add_huxi = 6
-            elseif i == 9 or i==38 then
-                add_huxi = 3
+            if i == 37 then
+                add_huxi = 9    --大二七十
+            elseif i == 38 then
+                add_huxi = 6    --小二七十
+            elseif i == 1 then
+                add_huxi = 6  -- 大一二三
+            elseif i == 9 then
+                add_huxi = 3    --小一二三
             end
             if level == 6 and huxi + add_huxi == 0 then
                 break

@@ -11,25 +11,25 @@
 
 using namespace std;
 
-//ÊıÖµ¶¨Òå
-#define MAX_WEAVE					7									//×î´ó×éºÏ
-#define MAX_INDEX					21									//×î´óË÷Òı
-#define MAX_COUNT					21									//×î´óÊıÄ¿
-#define MAX_COMMON_CARD_COUNT		20									//³£ÓÃÅÆÊıÁ¿
-#define MIN_HU_VAL					15									//×îĞ¡ºúÏ¢
-#define MAX_TUN_VAL					16									//×î´ó¶ÚÖµ
+//æ•°å€¼å®šä¹‰
+#define MAX_WEAVE					7									//æœ€å¤§ç»„åˆ
+#define MAX_INDEX					21									//æœ€å¤§ç´¢å¼•
+#define MAX_COUNT					21									//æœ€å¤§æ•°ç›®
+#define MAX_COMMON_CARD_COUNT		20									//å¸¸ç”¨ç‰Œæ•°é‡
+#define MIN_HU_VAL					15									//æœ€å°èƒ¡æ¯
+#define MAX_TUN_VAL					16									//æœ€å¤§å›¤å€¼
 
-#define	MASK_COLOR					0xF0								//»¨É«ÑÚÂë
-#define	MASK_VALUE					0xFF								//ÊıÖµÑÚÂë
+#define	MASK_COLOR					0xF0								//èŠ±è‰²æ©ç 
+#define	MASK_VALUE					0xFF								//æ•°å€¼æ©ç 
 
-//¹æÔòÀàĞÍ
+//è§„åˆ™ç±»å‹
 enum enPlayType
 {
-	enPlayType_NORMAL	= 0,		//Ò»°ã
-	enPlayType_XDD		= 1,		//Ğ¡´ó´î
-	enPlayType_27A		= 2,		//¶şÆßÊ®
-	enPlayType_123		= 3,		//Ò»¶şÈı
-	enPlayType_WANG		= 4,		//Íõ
+	enPlayType_NORMAL	= 0,		//ä¸€èˆ¬
+	enPlayType_XDD		= 1,		//å°å¤§æ­
+	enPlayType_27A		= 2,		//äºŒä¸ƒå
+	enPlayType_123		= 3,		//ä¸€äºŒä¸‰
+	enPlayType_WANG		= 4,		//ç‹
 	enPlayType_max,
 };
 
@@ -171,13 +171,13 @@ void getShunZhiList(map<int, char> & mapList)
 map<int, char>	m_mapKey;
 int getCardVal(int nVal)
 {
-	//ËÄÕÅÅÆÊ±  Ö»ÓĞÒ»ÖÖÇé¿ö 
-	//	1.ËÄÕÅÏàÍ¬µÄ»ò´øÍõ	
-	//ÈıÕÅÅÆÊ± 
-	//	1.ÈıÕÅÒ»ÑùµÄ»ò´øÍõ
-	//  2.¶şÆßÊ®
-	//  3.´óĞ¡´î
-	//	4.Á¬ÅÆ
+	//å››å¼ ç‰Œæ—¶  åªæœ‰ä¸€ç§æƒ…å†µ 
+	//	1.å››å¼ ç›¸åŒçš„æˆ–å¸¦ç‹	
+	//ä¸‰å¼ ç‰Œæ—¶ 
+	//	1.ä¸‰å¼ ä¸€æ ·çš„æˆ–å¸¦ç‹
+	//  2.äºŒä¸ƒå
+	//  3.å¤§å°æ­
+	//	4.è¿ç‰Œ
 	if (m_mapKey.empty())
 	{
 		getTiPaoList(m_mapKey);
@@ -338,12 +338,12 @@ private:
 	vector<char>		vctCard;
 	int					nFlag;	
 	char				nLeft;
-	vector<char>		vctCardIndex[21];	//21ÖÖÅÆ
+	vector<char>		vctCardIndex[21];	//21ç§ç‰Œ
 };
 
 struct stAnswer
 {
-	char				nPer;		// ±¶ÂÊ
+	char				nPer;		// å€ç‡
 	char				nHuVal;
 	vector<stHuKeyData> vctData;
 
@@ -403,7 +403,7 @@ struct stAnswer
 bool g_bError = false;
 void getCardHuKey(stCardData stData, stAnswer &answerData, stAnswer &resultMax)
 {	
-	// 1.Ô¤´¦Àí	
+	// 1.é¢„å¤„ç†	
 	//vector<stHuKeyData> &vctHuKeyData = answerData.vctData;		
 	
 	// 2.
@@ -414,7 +414,7 @@ void getCardHuKey(stCardData stData, stAnswer &answerData, stAnswer &resultMax)
 		stLeftCard.push(vctLeftIndex[i]);
 	}
 
-	// 3.Âß¼­
+	// 3.é€»è¾‘
 	int nLeft = stLeftCard.size();	
 	if (nLeft == 0)
 	{		
@@ -450,23 +450,23 @@ void getCardHuKey(stCardData stData, stAnswer &answerData, stAnswer &resultMax)
 			resultMax.push(stHuKeyData(0, stLeftCard.getVal(0), stLeftCard.getVal(1)));						
 		}	
 	}
-	else	// »¹ÓĞ¶à¸ö
+	else	// è¿˜æœ‰å¤šä¸ª
 	{		
 		static char s_chrIndex[21] = {
 			0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A,
 			0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17, 0x18, 0x19, 0x1A,	0xff,
 		};
-		// 1.³¢ÊÔ12»ò9ºú
+		// 1.å°è¯•12æˆ–9èƒ¡
 		vector<char> vctKingIndex = stData.getcardsNumByVal(0xff);
 		if (vctKingIndex.size() == 4)
-		{	//¡¾1.1¡¿ ËÄ¸öÍõ
+		{	//ã€1.1ã€‘ å››ä¸ªç‹
 			stHuKeyData sKeyData(12, vctKingIndex[0], vctKingIndex[1], vctKingIndex[2], vctKingIndex[3]);
 			answerData.push(sKeyData, &stData);
 			getCardHuKey(stData, answerData, resultMax);							
 			answerData.pop(&stData);
 		}
 		if (vctKingIndex.size() >= 3)
-		{	//¡¾1.2¡¿ Èı¸öÍõ´øÒ»¸ö
+		{	//ã€1.2ã€‘ ä¸‰ä¸ªç‹å¸¦ä¸€ä¸ª
 			for (int i=19; i>=0; --i)
 			{
 				vector<char> vctTemp = stData.getcardsNumByVal(s_chrIndex[i]);
@@ -481,7 +481,7 @@ void getCardHuKey(stCardData stData, stAnswer &answerData, stAnswer &resultMax)
 			}
 		}
 		if (vctKingIndex.size() >= 2)
-		{	//¡¾1.2¡¿ Á½¸öÍõ´øÁ½¸ö
+		{	//ã€1.2ã€‘ ä¸¤ä¸ªç‹å¸¦ä¸¤ä¸ª
 			for (int i=19; i>=0; --i)
 			{
 				vector<char> vctTemp = stData.getcardsNumByVal(s_chrIndex[i]);
@@ -496,7 +496,7 @@ void getCardHuKey(stCardData stData, stAnswer &answerData, stAnswer &resultMax)
 			}
 		}
 		if (vctKingIndex.size() >= 1)
-		{	//¡¾1.3¡¿ Ò»¸öÍõ´øÈı¸ö
+		{	//ã€1.3ã€‘ ä¸€ä¸ªç‹å¸¦ä¸‰ä¸ª
 			for (int i=19; i>=0; --i)
 			{
 				vector<char> vctTemp = stData.getcardsNumByVal(s_chrIndex[i]);
@@ -511,16 +511,16 @@ void getCardHuKey(stCardData stData, stAnswer &answerData, stAnswer &resultMax)
 			}
 		}
 
-		// 2 ³¢ÊÔ6ºú»ò3ºú
+		// 2 å°è¯•6èƒ¡æˆ–3èƒ¡
 		if (vctKingIndex.size() >= 3)
-		{	//¡¾2.1¡¿ Èı¸öÍõ
+		{	//ã€2.1ã€‘ ä¸‰ä¸ªç‹
 			stHuKeyData sKeyData(6, vctKingIndex[0], vctKingIndex[1], vctKingIndex[2]);
 			answerData.push(sKeyData, &stData);
 			getCardHuKey(stData, answerData, resultMax);							
 			answerData.pop(&stData);
 		}
 		if (vctKingIndex.size() >= 2)
-		{	//¡¾2.2¡¿ ¶ş¸öÍõ´øÒ»¸ö
+		{	//ã€2.2ã€‘ äºŒä¸ªç‹å¸¦ä¸€ä¸ª
 			for (int i=19; i>=0; --i)
 			{
 				vector<char> vctTemp = stData.getcardsNumByVal(s_chrIndex[i]);
@@ -535,7 +535,7 @@ void getCardHuKey(stCardData stData, stAnswer &answerData, stAnswer &resultMax)
 			}
 		}
 		if (vctKingIndex.size() >= 1)
-		{	//¡¾2.3¡¿ Ò»¸öÍõ´øÁ½¸ö
+		{	//ã€2.3ã€‘ ä¸€ä¸ªç‹å¸¦ä¸¤ä¸ª
 			for (int i=19; i>=0; --i)
 			{
 				vector<char> vctTemp = stData.getcardsNumByVal(s_chrIndex[i]);
@@ -549,7 +549,7 @@ void getCardHuKey(stCardData stData, stAnswer &answerData, stAnswer &resultMax)
 				}
 			}
 		}
-		{	//¡¾2.4¡¿ Èı¸öµÄ			
+		{	//ã€2.4ã€‘ ä¸‰ä¸ªçš„			
 			for (int i=19; i>=0; --i)
 			{
 				vector<char> vctTemp = stData.getcardsNumByVal(s_chrIndex[i]);
@@ -563,7 +563,7 @@ void getCardHuKey(stCardData stData, stAnswer &answerData, stAnswer &resultMax)
 				}
 			}
 		}
-		{	//¡¾2.5¡¿ Ò»¶şÈı »ò´øÍõ
+		{	//ã€2.5ã€‘ ä¸€äºŒä¸‰ æˆ–å¸¦ç‹
 			vector<char> vctTemp1 = stData.getcardsNumByVal(0x11);
 			vector<char> vctTemp2 = stData.getcardsNumByVal(0x12);
 			vector<char> vctTemp3 = stData.getcardsNumByVal(0x13);
@@ -623,7 +623,7 @@ void getCardHuKey(stCardData stData, stAnswer &answerData, stAnswer &resultMax)
 				}
 			}
 		}
-		{	//¡¾2.6¡¿ 1 2 3 »ò´øÍõ
+		{	//ã€2.6ã€‘ 1 2 3 æˆ–å¸¦ç‹
 			vector<char> vctTemp1 = stData.getcardsNumByVal(0x01);
 			vector<char> vctTemp2 = stData.getcardsNumByVal(0x02);
 			vector<char> vctTemp3 = stData.getcardsNumByVal(0x03);
@@ -683,7 +683,7 @@ void getCardHuKey(stCardData stData, stAnswer &answerData, stAnswer &resultMax)
 				}
 			}
 		}
-		{	//¡¾2.7¡¿ ¶şÆßÊ® »ò´øÍõ
+		{	//ã€2.7ã€‘ äºŒä¸ƒå æˆ–å¸¦ç‹
 			vector<char> vctTemp1 = stData.getcardsNumByVal(0x12);
 			vector<char> vctTemp2 = stData.getcardsNumByVal(0x17);
 			vector<char> vctTemp3 = stData.getcardsNumByVal(0x1A);
@@ -743,7 +743,7 @@ void getCardHuKey(stCardData stData, stAnswer &answerData, stAnswer &resultMax)
 				}
 			}
 		}
-		{	//¡¾2.8¡¿ 2 7 10 »ò´øÍõ
+		{	//ã€2.8ã€‘ 2 7 10 æˆ–å¸¦ç‹
 			vector<char> vctTemp1 = stData.getcardsNumByVal(0x02);
 			vector<char> vctTemp2 = stData.getcardsNumByVal(0x07);
 			vector<char> vctTemp3 = stData.getcardsNumByVal(0x0A);
@@ -861,7 +861,7 @@ bool getCardHuKeyInit(vector<char> &vctCardIn, stAnswer &resultAnswer)
 	{
 		return false;
 	}
-	// Í³¼ÆÅÆ
+	// ç»Ÿè®¡ç‰Œ
 	g_bError = false;
 
 	char						nLastKey = vctCardIn[nSizeCard-1];
@@ -872,14 +872,14 @@ bool getCardHuKeyInit(vector<char> &vctCardIn, stAnswer &resultAnswer)
 	for (size_t i=0; i<nSizeCard; ++i)
 	{		
 		sCardData.push(vctCardIn[i]);
-		if (i != nSizeCard-1)	// ×îºóÒ»ÕÅÅÆÔİ²»Í³¼Æ
+		if (i != nSizeCard-1)	// æœ€åä¸€å¼ ç‰Œæš‚ä¸ç»Ÿè®¡
 		{
 			mapKeyCount[vctCardIn[i]].push_back(i);
 		}		
 	}
-	int	nKingNum = mapKeyCount[0xff].size();	// ÍõÅÆ¸öÊı
+	int	nKingNum = mapKeyCount[0xff].size();	// ç‹ç‰Œä¸ªæ•°
 	map<char, vector<char> >	mapCard[5];
-	// ÓÅÏÈÄÃ³öËÄ¸öµÄ
+	// ä¼˜å…ˆæ‹¿å‡ºå››ä¸ªçš„
 	map<char, vector<char>>::iterator iter = mapKeyCount.begin();
 	for (; iter!=mapKeyCount.end(); ++iter)
 	{
@@ -896,7 +896,7 @@ bool getCardHuKeyInit(vector<char> &vctCardIn, stAnswer &resultAnswer)
 	{
 		stCardData sCardTemp = sCardData;
 		stAnswer sAnswerTemp = sAnswer;		
-		int nKingComb = nKingNum-i;		// ÓÃÓÚ×éºÏµÄÅÆÖĞÍõµÄ¸öÊı
+		int nKingComb = nKingNum-i;		// ç”¨äºç»„åˆçš„ç‰Œä¸­ç‹çš„ä¸ªæ•°
 		if (i == 0)
 		{			
 			if (MAX_TUN_VAL <= resultAnswer.nGetHuPer()) 
